@@ -92,5 +92,106 @@ namespace TechnoBeta.Areas.Admin.Controllers
             return RedirectToAction("AddPage");
 
         }
+
+        // GET: Admin/Pages/EditPage/id
+        [HttpGet]
+        public ActionResult EditPage(int id)
+        {
+            // Declare PageVM
+            PageVM model;
+            using (Db db = new Db())
+            {
+                // Get the page
+                PageDTO dto = db.Pages.Find(id);
+
+                // Codfirm page exists
+                if(dto == null)
+                {
+                    return Content("The page does not exist");
+                
+}
+
+                // Init PageVM
+                model = new PageVM(dto);
+            }
+
+            // Return view with model
+            return View(model);
+        }
+
+        // POST: Admin/Pages/EditPage/id
+        [HttpPost]
+        public ActionResult EditPage(PageVM model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using ( Db db = new Db())
+            {
+                int id = model.Id;
+                string slug = "home";
+                PageDTO dto = db.Pages.Find(id);
+
+                dto.Title = model.Title;
+                if( model.Slug != "home")
+                {
+                    if (string.IsNullOrWhiteSpace(model.Slug))
+                    {
+                        slug = model.Title.Replace(" ", "-").ToLower();
+                    }
+                    else
+                    {
+                        slug = model.Slug.Replace(" ", "-").ToLower();
+                    }
+                }
+
+                if( db.Pages.Where( x => x.Id != id).Any( x => x.Title != model.Title) || db.Pages.Where(x => x.Id != id).Any(x => x.Slug != slug)){
+                    ModelState.AddModelError("", "This title or slug exists");
+                }
+
+
+                dto.Slug = slug;
+                dto.Title = model.Title;
+                dto.HasSidebar = model.HasSidebar;
+
+
+                db.SaveChanges();
+            }
+
+            TempData["SM"] = "You have edited the page";
+
+            return RedirectToAction("EditPage");
+            
+
+        }
+
+        public ActionResult PageDetails(int id)
+        {
+            PageVM model;
+            using(Db db = new Db())
+            {
+                PageDTO dto = db.Pages.Find(id);
+                if(dto == null)
+                {
+                    return Content("The page doesn.t exist");
+                }
+                model = new PageVM(dto);
+            }
+            return View(model);
+        }
+
+        public ActionResult DeletePage(int id)
+        {
+            using(Db db = new Db())
+            {
+                PageDTO dto = db.Pages.Find(id);
+                db.Pages.Remove(dto);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+
+        }
     }
 }
