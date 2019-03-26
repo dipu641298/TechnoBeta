@@ -155,8 +155,8 @@ namespace TechnoBeta.Areas.Admin.Controllers
                 dto.Slug = slug;
                 dto.Title = model.Title;
                 dto.HasSidebar = model.HasSidebar;
-
-
+                dto.Body = model.Body;
+                
                 db.SaveChanges();
             }
 
