@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using TechnoBeta.Models.Data;
+using System.Web.Mvc;
 
 namespace TechnoBeta.Models.ViewModels.Pages
 {
@@ -34,6 +35,7 @@ namespace TechnoBeta.Models.ViewModels.Pages
         public int Sorting { get; set; }
         [Required]
         [StringLength(int.MaxValue, MinimumLength = 3)]
+        [AllowHtml]
         public string Body { get; set; }
         public bool HasSidebar { get; set; }
     }
