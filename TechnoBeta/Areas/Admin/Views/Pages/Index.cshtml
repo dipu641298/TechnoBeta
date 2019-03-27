@@ -62,13 +62,7 @@ else
 <script>
     $(function () {
 
-        /* Confirm Page deletion here */
-        $("a.delete").click(function () {
-            if (!confirm("Confirm page delettion")) return false;
-        });
-        ///////////////////////////////////////
-
-
+        /* Pages sorting done here */
         $("table#pages tbody").sortable({
             items: "tr:not(.home)",
             placeholder: "ui-state-highlight",
@@ -80,6 +74,13 @@ else
 
                 });
             }
+        });
+        ///////////////////////////////////////
+
+
+        /* Confirm Page deletion here */
+        $("a.delete").click(function () {
+            if (!confirm("Confirm page delettion")) return false;
         });
         ///////////////////////////////////////
 
