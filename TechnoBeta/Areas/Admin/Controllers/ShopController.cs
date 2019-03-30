@@ -49,28 +49,27 @@ namespace TechnoBeta.Areas.Admin.Controllers
         }
 
 
-       /* [HttpPost]
-        public void ReorderCategories(int[] id)
-        {
-            using (Db db = new Db())
-            {
-                int count = 1;
+        [HttpPost]
+         public void ReorderCategories(int[] id)
+         {
+             using (Db db = new Db())
+             {
+                 int count = 1;
 
-                CategoryDTO dto;
+                 CategoryDTO dto;
 
-                for (int i = 0; i < id.Length; i++)
-                {
-                    int catId = id[i];
-                    dto = db.Categories.Find(catId);
-                    dto.Sorting = count;
+                 foreach (var catId in id)
+                 {
+                     dto = db.Categories.Find(catId);
+                     dto.Sorting = count;
 
-                    db.SaveChanges();
+                     db.SaveChanges();
 
-                    count++;
-                }
-            }
+                     count++;
+                 }
+             }
 
-        }*/
+         }
 
 
         public ActionResult DeleteCategory(int id)
@@ -84,6 +83,25 @@ namespace TechnoBeta.Areas.Admin.Controllers
             }
 
             return RedirectToAction("Categories");
+        }
+
+        [HttpPost]
+        public string RenameCategory(string newCatName, int id)
+        {
+            using (Db db = new Db())
+            {
+                if (db.Categories.Any(x => x.Name == newCatName))
+                    return "titletaken";
+
+                CategoryDTO dto = db.Categories.Find(id);
+
+                dto.Name = newCatName;
+                dto.Slug = newCatName.Replace(" ", "-").ToLower();
+
+                db.SaveChanges();
+            }
+
+            return "ok";
         }
     }
 }
