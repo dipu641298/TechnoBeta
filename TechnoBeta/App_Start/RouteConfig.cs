@@ -13,6 +13,9 @@ namespace TechnoBeta
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+            routes.MapRoute("Shop", "Shop/{action}/{name}", new { controller = "Shop", action = "Index", name = UrlParameter.Optional }, new[] { "TechnoBeta.Controllers" });
+
             routes.MapRoute("SidebarPartial", "Pages/SidebarPartial", new { controller = "Pages", action = "SidebarPartial" }, new[] { "TechnoBeta.Controllers" });
             routes.MapRoute("PagesMenuPartial", "Pages/PagesMenuPartial", new { controller = "Pages", action = "PagesMenuPartial" }, new[] { "TechnoBeta.Controllers" });
             routes.MapRoute("Pages", "{page}", new { controller = "Pages", action = "Index" }, new[] { "TechnoBeta.Controllers" });
