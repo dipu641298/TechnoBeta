@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using TechnoBeta.Models.Data;
 using TechnoBeta.Models.ViewModels.Account;
+using TechnoBeta.Models.ViewModels.Cart;
 using TechnoBeta.Models.ViewModels.Shop;
 
 namespace TechnoBeta.Controllers
@@ -144,6 +145,15 @@ namespace TechnoBeta.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+            foreach(var item in cart)
+            {
+                item.Quantity = 0;
+            }
+
+
+
             return Redirect("~/account/login");
         }
 
