@@ -8,6 +8,7 @@ using TechnoBeta.Models.ViewModels.Pages;
 
 namespace TechnoBeta.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PagesController : Controller
     {
         // GET: Admin/Pages

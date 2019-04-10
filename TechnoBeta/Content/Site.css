@@ -59,15 +59,10 @@ ul.adminarea {
     z-index: 1;
 }
 
-    .ajaxbg span {
-        position: absolute;
-        top: 30%;
-        left: 50%;
-    }
-
-form.paypalform {
+.ajaxbg span {
     position: absolute;
-    left: -2000px;
+    top: 30%;
+    left: 50%;
 }
 
 .row {

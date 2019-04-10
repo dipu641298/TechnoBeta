@@ -2,13 +2,14 @@
 
 @{
     ViewBag.Title = "Cart Details";
+    int count = 1;
 }
 
-<h3>Cart Details</h3>
+<h2>Cart Details</h2>
 
 @if (ViewBag.Message != null)
 {
-    <h4>@ViewBag.Message</h4>
+    <h3>@ViewBag.Message</h3>
 }
 else
 {
@@ -32,40 +33,35 @@ else
             <th>
                 Total
             </th>
-
             <th>
 
             </th>
-
         </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductName)
-                </td>
-                <td class="qty@(item.ProductId)">
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" />
-                </td>
-
-                <td>
-                    <a href="#" class="incrproduct" data-id="@item.ProductId">+</a>
-                    <a href="#" class="decrproduct" data-id="@item.ProductId">-</a>
-                    <a href="#" class="removeproduct" data-id="@item.ProductId">Remove</a>
-                </td>
-                <td class="total@(item.ProductId)">
-                    @Html.DisplayFor(modelItem => item.Total)
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td class="qty@(item.ProductId)">
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" />
+            </td>
+            <td>
+                <a href="#" class="incrproduct" data-id="@item.ProductId">+</a>
+                <a href="#" class="decrproduct" data-id="@item.ProductId">-</a>
+                <a href="#" class="removeproduct" data-id="@item.ProductId">Remove</a>
+            </td>
+            <td class="total@(item.ProductId)">
+                $@Html.DisplayFor(modelItem => item.Total)
+            </td>
+        </tr>
+    }
 
         <tr>
             <td></td>
@@ -78,9 +74,12 @@ else
         </tr>
 
     </table>
+
+    
+    <br />
+    <a href="#" class="placeorder btn btn-primary pull-right">Checkout</a>
+
 }
-
-
 
 @section Scripts {
 <script>
@@ -100,15 +99,9 @@ $(function () {
             var gt = parseFloat($("td.grandtotal span").text());
             var grandtotal = (gt + data.price).toFixed(2);
             $("td.grandtotal span").text(grandtotal);
-        }).done(function (data) {
-            var url2 = "/cart/PaypalPartial";
-            $.get(url2, { }, function (data) {
-                $('div.paypaldiv').html(data);
-            });
         });
     });
     //////////////////////////////////////////////////////////////
-
     /*
     * Decrement product
     */
@@ -132,15 +125,9 @@ $(function () {
                 var grandtotal = (gt - data.price).toFixed(2);
                 $("td.grandtotal span").text(grandtotal);
             }
-        }).done(function (data) {
-            var url2 = "/cart/PaypalPartial";
-            $.get(url2, {}, function (data) {
-                $('div.paypaldiv').html(data);
-            });
         });
     });
     //////////////////////////////////////////////////////////////
-
     /*
     * Remove product
     */
@@ -154,7 +141,22 @@ $(function () {
         });
     });
     //////////////////////////////////////////////////////////////
-    
+    /*
+    * Place order
+    */
+    $("a.placeorder").click(function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var url = "/cart/PlaceOrder";
+        $(".ajaxbg").show();
+        $.post(url, {}, function (data) {
+            $(".ajaxbg span").text("Thank you. Your order has been placed.");
+            setTimeout(function () {
+                window.location.replace("/pages");
+            }, 2000);
+        });
+    });
+    //////////////////////////////////////////////////////////////
 });
 </script>
 

@@ -201,5 +201,59 @@ namespace TechnoBeta.Controllers
 
         }
 
+
+        [HttpPost]
+        public void PlaceOrder()
+        {
+            // Get cart list
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+
+            // Get username
+            string username = User.Identity.Name;
+
+            int orderId = 0;
+
+            using (Db db = new Db())
+            {
+                // Init OrderDTO
+                OrderDTO orderDTO = new OrderDTO();
+
+                // Get user id
+                var q = db.Users.FirstOrDefault(x => x.Username == username);
+                int userId = q.Id;
+
+                // Add to OrderDTO and save
+                orderDTO.UserId = userId;
+                orderDTO.CreatedAt = DateTime.Now;
+
+                db.Orders.Add(orderDTO);
+
+                db.SaveChanges();
+
+                // Get inserted id
+                orderId = orderDTO.OrderId;
+
+                // Init OrderDetailsDTO
+                OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
+
+                // Add to OrderDetailsDTO
+                foreach (var item in cart)
+                {
+                    orderDetailsDTO.OrderId = orderId;
+                    orderDetailsDTO.UserId = userId;
+                    orderDetailsDTO.ProductId = item.ProductId;
+                    orderDetailsDTO.Quantity = item.Quantity;
+
+                    item.Quantity = 0;
+
+                    db.OrderDetails.Add(orderDetailsDTO);
+
+                    db.SaveChanges();
+                }
+            }
+            
+            
+
+        }
     }
 }
