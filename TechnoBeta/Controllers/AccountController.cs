@@ -109,7 +109,8 @@ namespace TechnoBeta.Controllers
                     LastName = model.LastName,
                     EmailAddress = model.EmailAddress,
                     Username = model.Username,
-                    Password = model.Password
+                    Password = model.Password,
+                    Address = model.Address
                 };
 
                 // Add the DTO

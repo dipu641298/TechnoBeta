@@ -22,6 +22,7 @@ namespace TechnoBeta.Models.ViewModels.Account
             EmailAddress = row.EmailAddress;
             Username = row.Username;
             Password = row.Password;
+            Address = row.Address;
         }
 
         public int Id { get; set; }
@@ -38,5 +39,7 @@ namespace TechnoBeta.Models.ViewModels.Account
         public string Password { get; set; }
         [Required]
         public string ConfirmPassword { get; set; }
+        [Required]
+        public string Address { get; set; }
     }
 }

@@ -536,6 +536,7 @@ namespace TechnoBeta.Areas.Admin.Controllers
                     // Get username
                     UserDTO user = db.Users.Where(x => x.Id == order.UserId).FirstOrDefault();
                     string username = user.Username;
+                    string delivery_address = user.Address;
 
                     // Loop through list of OrderDetailsDTO
                     foreach (var orderDetails in orderDetailsList)
@@ -563,7 +564,8 @@ namespace TechnoBeta.Areas.Admin.Controllers
                         Username = username,
                         Total = total,
                         ProductsAndQty = productsAndQty,
-                        CreatedAt = order.CreatedAt
+                        CreatedAt = order.CreatedAt,
+                        Delivery_address = delivery_address
                     });
                 }
             }

@@ -15,16 +15,19 @@ else
     <table class="table">
         <tr>
             <th>
-               OrderNumber
+                OrderNumber
             </th>
             <th>
-               Username
+                Username
             </th>
             <th>
-               Total
+                Delivery Address
             </th>
             <th>
                 CreatedAt
+            </th>
+            <th>
+                Total
             </th>
             <th></th>
         </tr>
@@ -39,10 +42,13 @@ else
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
             <td>
-               @foreach(var item2 in item.ProductsAndQty)
-               {
-                   @item2.Key @:x @item2.Value <br />
-               }
+                @Html.DisplayFor(modelItem => item.Delivery_address)
+            </td>
+            <td>
+                @foreach (var item2 in item.ProductsAndQty)
+                {
+                    @item2.Key @:x @item2.Value <br />
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedAt)
