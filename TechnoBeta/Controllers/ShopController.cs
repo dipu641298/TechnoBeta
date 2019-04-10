@@ -86,8 +86,8 @@ namespace TechnoBeta.Controllers
             }
 
             // Get gallery images
-            model.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
-                                                .Select(fn => Path.GetFileName(fn));
+            /*model.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+                                                .Select(fn => Path.GetFileName(fn));*/
 
             // Return view with model
             return View("ProductDetails", model);
